@@ -1,52 +1,45 @@
-# Dog Walk - Web programiranje projekat
+# Projektna dokumentacija - Dog Walk
 
-Web aplikacija za temu **Šetnja pasa**.
+Dog Walk je web aplikacija za pronalaženje i kontaktiranje šetača pasa. Aplikacija razlikuje četiri nivoa pristupa: gost, registrovani korisnik, registrovani korisnik-šetač i administrator.
 
-## Tehnologije
+## Uloge
 
-- HTML5, CSS3, Bootstrap 5
-- JavaScript + Fetch API + JSON
-- PHP 8 + OOP
-- MySQL + PDO
-- PHPMailer preko Composer-a
-- Responsive dizajn
+Gost može da pregleda početnu stranicu, pretražuje šetače i izvrši registraciju.
 
-## Pokretanje lokalno
+Registrovani korisnik može da menja profilne podatke, promeni lozinku, zatraži reset lozinke, kontaktira šetača i oceni svakog šetača najviše jednom.
 
-1. Kopiraj folder projekta u `C:/xampp/htdocs/`.
-2. Pokreni Apache i MySQL u XAMPP-u.
-3. Importuj `database.sql` kroz phpMyAdmin.
-4. Proveri podatke za bazu u `includes/db_config.php`.
-5. U terminalu pokreni `composer install` u folderu projekta.
-6. Otvori projekat u browseru preko `http://localhost/ime-foldera/`.
+Registrovani šetač može da uređuje svoj oglas, postavi ili obriše fotografiju, menja dostupnost i pregleda zahteve korisnika za šetnju. Šetač može da radi sa oglasom tek kada ga administrator odobri.
 
-## Test nalozi
+Administrator može da pregleda korisnike, blokira ili odblokira korisnike, pregleda šetače i odobri ili deaktivira šetače.
 
-Svi test nalozi koriste lozinku: `password`.
+## Baza podataka
 
-- Admin: `admin@dogwalk.local`
-- Korisnik: `user@dogwalk.local`
-- Šetač 1: `walker1@dogwalk.local`
-- Šetač 2: `walker2@dogwalk.local`
+Baza se zove `dog_walk`. Glavne tabele su:
 
-## Email
+- `users`
+- `walkers`
+- `ratings`
+- `contacts`
 
-PHPMailer je podešen u `includes/MailService.php`, a SMTP podaci se nalaze u `includes/db_config.php`.
-Za lokalno testiranje, ako SMTP nije podešen, linkovi za aktivaciju i reset lozinke upisuju se u `logs/mail_log.txt`.
+Email adresa je jedinstvena i koristi se kao korisničko ime.
 
-## Napomena za predaju
+## Bezbednost
 
-Trello tabla i Git repozitorijum se prave ručno, jer nisu deo PHP koda.
+Lozinke se čuvaju pomoću bcrypt hash algoritma. Za rad sa bazom koristi se PDO i prepared statements. Zaštićene stranice koriste sesije i proveru uloge korisnika.
 
-## Gmail SMTP setup
+## Email funkcionalnosti
 
-The project is configured to send mail through Gmail using PHPMailer.
+Aktivacija naloga i reset lozinke rade preko tokena i email linkova. PHPMailer se instalira preko Composer-a. Ako SMTP nije podešen, linkovi se za lokalno testiranje upisuju u `logs/mail_log.txt`.
 
-1. Enable 2-Step Verification on the Google account used for sending mail.
-2. Create a Google App Password for the project.
-3. Open `includes/smtp_config.local.php`.
-4. Replace `PASTE_YOUR_16_CHARACTER_APP_PASSWORD_HERE` with the App Password. Spaces are allowed; the application removes them automatically.
-5. Run `composer install` in the project directory so PHPMailer is installed.
-6. Start Apache and MySQL, import `database.sql`, then test registration or Forgot Password.
+## AJAX / Fetch
 
-The sender account is configured as `markoprobojcevic@gmail.com`. Never commit `includes/smtp_config.local.php` to Git; it is included in `.gitignore`.
+Fetch API i JSON koriste se kod registracije, prijave i ocenjivanja šetača. Ti zahtevi komuniciraju sa bazom podataka.
+
+## Validacija
+
+Validacija postoji na klijentskoj strani kroz HTML/JavaScript i na serverskoj strani kroz PHP metode i provere.
+
+## Dodatna funkcionalnost
+
+Dodata je stranica na kojoj šetač može da prihvati ili odbije zahteve za šetnju.
+
