@@ -1,0 +1,5 @@
+/vendor/
+/includes/smtp_config.local.php
+/logs/mail_log.txt
+/uploads/walkers/*
+!/uploads/walkers/.gitkeep

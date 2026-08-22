@@ -1,0 +1,14 @@
+{
+    "name": "student/dog-walk",
+    "description": "Dog walking web application for web programming project.",
+    "type": "project",
+    "require": {
+        "php": ">=8.0",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "DogWalk\\": "classes/"
+        }
+    }
+}
